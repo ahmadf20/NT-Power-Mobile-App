@@ -41,17 +41,6 @@ class DevicesScreenState extends State<DevicesScreen> {
                           ),
                         ),
                       ),
-                      Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8),
-                        child: IconButton(
-                          icon: Icon(Icons.add_box),
-                          onPressed: () {
-                            // Navigator.of(context)
-                            //     .pushNamed(DevicesScreen.routeName);
-                          },
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -95,7 +84,7 @@ class DevicesScreenState extends State<DevicesScreen> {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Icon(
-                                Icons.edit,
+                                Icons.add,
                                 size: 20,
                               ),
                               onPressed: () {},

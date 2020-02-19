@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ntpower/screens/devices_screen.dart';
+import 'package:ntpower/screens/history_screen.dart';
 import 'package:ntpower/screens/home_screen.dart';
 import 'package:ntpower/screens/login_screen.dart';
 import 'package:ntpower/screens/profile_screen.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName: (context) => LoginScreen(),
         ProfileScreen.routeName: (context) => ProfileScreen(),
         DevicesScreen.routeName: (context) => DevicesScreen(),
+        HistoryScreen.routeName: (context) => HistoryScreen(),
       },
     );
   }

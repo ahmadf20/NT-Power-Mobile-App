@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ntpower/main.dart';
 import 'package:ntpower/screens/devices_screen.dart';
+import 'package:ntpower/screens/history_screen.dart';
 import 'package:ntpower/screens/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -147,7 +148,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Icons.trending_up,
                                 size: 20,
                               ),
-                              onPressed: () {},
+                              onPressed: () => Navigator.of(context)
+                                  .pushNamed(HistoryScreen.routeName),
                             ),
                           ),
                         ],
