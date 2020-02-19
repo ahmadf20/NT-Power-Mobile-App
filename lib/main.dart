@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ntpower/screens/home_screen.dart';
 import 'package:ntpower/screens/login_screen.dart';
 
 void main() => runApp(MyApp());
@@ -29,6 +30,11 @@ class MyApp extends StatelessWidget {
         accentColor: Color(0xFFe2c472),
       ),
       home: LoginScreen(),
+      initialRoute: '/',
+      routes: {
+        HomeScreen.routeName: (context) => HomeScreen(),
+        LoginScreen.routeName: (context) => LoginScreen(),
+      },
     );
   }
 }

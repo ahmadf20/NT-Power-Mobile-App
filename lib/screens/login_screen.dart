@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ntpower/main.dart';
+import 'package:ntpower/screens/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const routeName = 'login_screen';
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -102,7 +104,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(HomeScreen.routeName);
+                    },
                   ),
                 ),
               ],
