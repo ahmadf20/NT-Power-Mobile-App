@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ntpower/screens/home_screen.dart';
 import 'package:ntpower/screens/login_screen.dart';
+import 'package:ntpower/screens/profile_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
       routes: {
         HomeScreen.routeName: (context) => HomeScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),
+        ProfileScreen.routeName: (context) => ProfileScreen(),
       },
     );
   }

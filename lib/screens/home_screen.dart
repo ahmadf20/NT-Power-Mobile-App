@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ntpower/main.dart';
+import 'package:ntpower/screens/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = 'home_screen';
@@ -23,8 +24,9 @@ class _HomeScreenState extends State<HomeScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Padding(
+                Container(
                   padding: const EdgeInsets.all(8.0),
+                  margin: EdgeInsets.only(top: 10),
                   child: Row(
                     children: <Widget>[
                       IconButton(
@@ -44,7 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icons.person_outline,
                           color: Colors.white,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context)
+                              .pushNamed(ProfileScreen.routeName);
+                        },
                       ),
                     ],
                   ),
@@ -128,8 +133,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Spacer(),
                           SizedBox(
-                            width: 50,
-                            height: 50,
+                            width: 40,
+                            height: 40,
                             child: FlatButton(
                               color: Colors.grey[200],
                               padding: EdgeInsets.all(0),
@@ -138,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               child: Icon(
                                 Icons.trending_up,
-                                size: 25,
+                                size: 20,
                               ),
                               onPressed: () {},
                             ),
