@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ntpower/main.dart';
+import 'package:ntpower/screens/devices_screen.dart';
 import 'package:ntpower/screens/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -34,7 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icons.settings,
                           color: Colors.white,
                         ),
-                        onPressed: () {},
+                        onPressed: () => Navigator.of(context)
+                            .pushNamed(DevicesScreen.routeName),
                       ),
                       Expanded(
                         child: Center(
