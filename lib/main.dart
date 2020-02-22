@@ -6,6 +6,8 @@ import 'package:ntpower/screens/history_screen.dart';
 import 'package:ntpower/screens/home_screen.dart';
 import 'package:ntpower/screens/login_screen.dart';
 import 'package:ntpower/screens/profile_screen.dart';
+import 'package:ntpower/utils/f_user.dart';
+import 'package:ntpower/widgets/loading_animation.dart';
 import 'package:provider/provider.dart';
 
 String url = 'https://polar-temple-18998.herokuapp.com';
@@ -20,7 +22,26 @@ SystemUiOverlayStyle mySystemUIOverlaySyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent // status bar color
     );
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String token;
+
+  Future loadToken() async {
+    token = await getToken();
+    print(token);
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadToken();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -41,7 +62,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Color(0xFF047353),
           accentColor: Color(0xFFe2c472),
         ),
-        home: LoginScreen(),
+        home: token != null ? HomeScreen() : LoginScreen(),
         initialRoute: '/',
         routes: {
           HomeScreen.routeName: (context) => HomeScreen(),

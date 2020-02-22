@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ntpower/main.dart';
+import 'package:ntpower/providers/p_user.dart';
 import 'package:ntpower/screens/login_screen.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const routeName = 'edit_profile_screen';
@@ -52,9 +54,9 @@ class ProfileScreenState extends State<ProfileScreen> {
                             Icons.exit_to_app,
                           ),
                           onPressed: () {
+                            Provider.of<UserProvider>(context,listen:false).clearData();
                             Navigator.of(context).pushNamedAndRemoveUntil(
                                 LoginScreen.routeName, (e) => false);
-                            //TODO: clear all the shared preference value as well as the provider
                           },
                         ),
                       ),
