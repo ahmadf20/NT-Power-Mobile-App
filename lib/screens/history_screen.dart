@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ntpower/main.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HistoryScreen extends StatefulWidget {
   static const routeName = 'history_screen';
@@ -45,7 +44,7 @@ class HistoryScreenState extends State<HistoryScreen> {
                     ],
                   ),
                 ),
-                ChartHistory(),
+                // ChartHistory(),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 25, vertical: 25),
@@ -102,40 +101,6 @@ class HistoryScreenState extends State<HistoryScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class ChartHistory extends StatelessWidget {
-  const ChartHistory({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: SfCartesianChart(
-          plotAreaBorderWidth: 0,
-          tooltipBehavior: TooltipBehavior(enable: true),
-          primaryYAxis: NumericAxis(
-              majorGridLines: MajorGridLines(width: 0),
-              axisLine: AxisLine(color: Colors.white),
-              interval: 100,
-              visibleMaximum: 500),
-          primaryXAxis: CategoryAxis(
-            plotOffset: -7.5,
-            majorGridLines: MajorGridLines(width: 0),
-            majorTickLines: MajorTickLines(width: 0),
-            rangePadding: ChartRangePadding.none,
-          ),
-          series: <ChartSeries>[
-            SplineSeries<SalesData, String>(
-                name: 'Pemasukkan Poin',
-                color: Color(0xffffd800),
-                splineType: SplineType.cardinal,
-                cardinalSplineTension: 0.7,
-                dataSource: chartDummyData,
-                xValueMapper: (SalesData sales, _) => sales.year,
-                yValueMapper: (SalesData sales, _) => sales.sales)
-          ]),
     );
   }
 }

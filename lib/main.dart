@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ntpower/providers/p_user.dart';
 import 'package:ntpower/screens/devices_screen.dart';
 import 'package:ntpower/screens/history_screen.dart';
 import 'package:ntpower/screens/home_screen.dart';
 import 'package:ntpower/screens/login_screen.dart';
 import 'package:ntpower/screens/profile_screen.dart';
+import 'package:provider/provider.dart';
+
+String url = 'https://polar-temple-18998.herokuapp.com';
 
 void main() => runApp(MyApp());
 
@@ -24,23 +28,29 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    return MaterialApp(
-      // debugShowMaterialGrid: true,
-      title: 'NT Power',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: Color(0xFF047353),
-        accentColor: Color(0xFFe2c472),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => UserProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'NT Power',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: Color(0xFF047353),
+          accentColor: Color(0xFFe2c472),
+        ),
+        home: LoginScreen(),
+        initialRoute: '/',
+        routes: {
+          HomeScreen.routeName: (context) => HomeScreen(),
+          LoginScreen.routeName: (context) => LoginScreen(),
+          ProfileScreen.routeName: (context) => ProfileScreen(),
+          DevicesScreen.routeName: (context) => DevicesScreen(),
+          HistoryScreen.routeName: (context) => HistoryScreen(),
+        },
       ),
-      home: LoginScreen(),
-      initialRoute: '/',
-      routes: {
-        HomeScreen.routeName: (context) => HomeScreen(),
-        LoginScreen.routeName: (context) => LoginScreen(),
-        ProfileScreen.routeName: (context) => ProfileScreen(),
-        DevicesScreen.routeName: (context) => DevicesScreen(),
-        HistoryScreen.routeName: (context) => HistoryScreen(),
-      },
     );
   }
 }

@@ -41,7 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Expanded(
                         child: Center(
-                          child: Text('NT POWER'),
+                          child: Image.asset(
+                            'assets/images/icon3.png',
+                            height: 25,
+                          ),
                         ),
                       ),
                       IconButton(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ntpower/main.dart';
+import 'package:ntpower/screens/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   static const routeName = 'edit_profile_screen';
@@ -11,6 +12,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class ProfileScreenState extends State<ProfileScreen> {
+  bool isEditable = false;
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion(
@@ -49,8 +52,9 @@ class ProfileScreenState extends State<ProfileScreen> {
                             Icons.exit_to_app,
                           ),
                           onPressed: () {
-                            // Navigator.of(context)
-                            //     .pushNamed(ProfileScreen.routeName);
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                LoginScreen.routeName, (e) => false);
+                            //TODO: clear all the shared preference value as well as the provider
                           },
                         ),
                       ),
@@ -196,7 +200,11 @@ class ProfileScreenState extends State<ProfileScreen> {
                                 Icons.edit,
                                 size: 20,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  isEditable = !isEditable;
+                                });
+                              },
                             ),
                           ),
                         ],
@@ -213,8 +221,10 @@ class ProfileScreenState extends State<ProfileScreen> {
                                 labelText: 'Username',
                                 suffixIcon: Icon(Icons.person_outline),
                               ),
+                              enabled: isEditable,
                               // controller: _emailTC,
                               // focusNode: _emailFC,
+
                               textInputAction: TextInputAction.next,
                               onFieldSubmitted: (_) {
                                 // FocusScope.of(context).requestFocus(_passwordFC);
@@ -229,6 +239,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                 labelText: 'Email',
                                 suffixIcon: Icon(Icons.mail_outline),
                               ),
+                              enabled: isEditable,
                               // controller: _emailTC,
                               // focusNode: _emailFC,
                               textInputAction: TextInputAction.next,
@@ -245,35 +256,43 @@ class ProfileScreenState extends State<ProfileScreen> {
                                 labelText: 'Password',
                                 suffixIcon: Icon(Icons.lock_outline),
                               ),
+                              enabled: isEditable,
                               obscureText: true,
+
                               // controller: _passwordTC,
                               // focusNode: _passwordFC,
                               textInputAction: TextInputAction.done,
                             ),
-                            Container(
-                              width: double.maxFinite,
-                              height: 55,
-                              margin: EdgeInsets.only(bottom: 30, top: 50),
-                              child: FlatButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                color: Theme.of(context).primaryColor,
-                                child: Text(
-                                  'Update',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
+                            !isEditable
+                                ? Container()
+                                : Container(
+                                    width: double.maxFinite,
+                                    height: 55,
+                                    margin:
+                                        EdgeInsets.only(bottom: 30, top: 50),
+                                    child: FlatButton(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      color: Theme.of(context).primaryColor,
+                                      child: Text(
+                                        'Update',
+                                        style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          isEditable = false;
+                                        });
+                                        // Navigator.of(context)
+                                        //     .pushNamed(HomeScreen.routeName);
+                                      },
+                                    ),
                                   ),
-                                ),
-                                onPressed: () {
-                                  // Navigator.of(context)
-                                  //     .pushNamed(HomeScreen.routeName);
-                                },
-                              ),
-                            ),
                           ],
                         ),
                       ),
