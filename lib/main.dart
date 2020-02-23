@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ntpower/providers/p_user.dart';
@@ -55,22 +56,25 @@ class _MyAppState extends State<MyApp> {
           create: (context) => UserProvider(),
         ),
       ],
-      child: MaterialApp(
-        title: 'NT Power',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: Color(0xFF047353),
-          accentColor: Color(0xFFe2c472),
+      child: BotToastInit(
+        child: MaterialApp(
+          title: 'NT Power',
+          debugShowCheckedModeBanner: false,
+          navigatorObservers: [BotToastNavigatorObserver()],
+          theme: ThemeData(
+            primaryColor: Color(0xFF047353),
+            accentColor: Color(0xFFe2c472),
+          ),
+          home: token != null ? HomeScreen() : LoginScreen(),
+          initialRoute: '/',
+          routes: {
+            HomeScreen.routeName: (context) => HomeScreen(),
+            LoginScreen.routeName: (context) => LoginScreen(),
+            ProfileScreen.routeName: (context) => ProfileScreen(),
+            DevicesScreen.routeName: (context) => DevicesScreen(),
+            HistoryScreen.routeName: (context) => HistoryScreen(),
+          },
         ),
-        home: token != null ? HomeScreen() : LoginScreen(),
-        initialRoute: '/',
-        routes: {
-          HomeScreen.routeName: (context) => HomeScreen(),
-          LoginScreen.routeName: (context) => LoginScreen(),
-          ProfileScreen.routeName: (context) => ProfileScreen(),
-          DevicesScreen.routeName: (context) => DevicesScreen(),
-          HistoryScreen.routeName: (context) => HistoryScreen(),
-        },
       ),
     );
   }

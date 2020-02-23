@@ -52,13 +52,13 @@ Future getUser() async {
   try {
     var token = await getToken();
 
-    var header = {
+    Map<String, String> header = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
       'X-Authorization': token
     };
 
-    var response = await get('$url/api/manage_user/', headers: header);
+    var response = await get('$url/api/manage_user', headers: header);
 
     print('${response.headers}\n${response.statusCode}\n${response.body}');
 
@@ -70,6 +70,36 @@ Future getUser() async {
       return responseJson['msg'];
     } else {
       return 'failed to login';
+    }
+  } catch (e) {
+    return e;
+  }
+}
+
+Future updateUser(var data) async {
+  try {
+    var token = await getToken();
+
+    var body = jsonEncode(data);
+    Map<String, String> header = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      'X-Authorization': token
+    };
+
+    var response =
+        await put('$url/api/manage_user', body: body, headers: header);
+
+    print('${response.headers}\n${response.statusCode}\n${response.body}');
+
+    var responseJson = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return true;
+    } else if (responseJson['msg'] != null) {
+      return 'error:' + responseJson['msg'];
+    } else {
+      return 'error has occured';
     }
   } catch (e) {
     return e;
