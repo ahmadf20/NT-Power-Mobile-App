@@ -13,7 +13,7 @@ class UserProvider extends ChangeNotifier {
   void setToken(String token) {
     _token = token;
     FUser.setToken(token);
-    ChangeNotifier();
+    notifyListeners();
   }
 
   User getUser() {
@@ -22,13 +22,13 @@ class UserProvider extends ChangeNotifier {
 
   void setUser(User user) {
     _user = user;
-    ChangeNotifier();
+    notifyListeners();
   }
 
   void clearData() {
     _token = null;
     _user = null;
     FUser.removeToken();
-    ChangeNotifier();
+    notifyListeners();
   }
 }

@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:ntpower/main.dart';
 import 'package:ntpower/models/user.dart';
+import 'package:ntpower/providers/p_device.dart';
 import 'package:ntpower/providers/p_user.dart';
 import 'package:ntpower/screens/login_screen.dart';
 import 'package:ntpower/utils/f_user.dart';
@@ -102,6 +103,9 @@ class ProfileScreenState extends State<ProfileScreen> {
                                   Provider.of<UserProvider>(context,
                                           listen: false)
                                       .clearData();
+                                  Provider.of<DeviceProvider>(context,
+                                          listen: false)
+                                      .clearData();
                                   Navigator.of(context).pushNamedAndRemoveUntil(
                                       LoginScreen.routeName, (e) => false);
                                 },
@@ -164,7 +168,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                                     BorderRadius.circular(7.5),
                                               ),
                                               child: Text(
-                                                'A',
+                                                user.name.substring(0, 1),
                                                 style: TextStyle(
                                                   fontFamily: 'Montserrat',
                                                   fontSize: 12,
@@ -175,7 +179,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                'Ahmad Faaiz A',
+                                                user.name,
                                                 style: TextStyle(
                                                   fontFamily: 'Montserrat',
                                                   color: Colors.white,

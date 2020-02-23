@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ntpower/providers/p_device.dart';
 import 'package:ntpower/providers/p_user.dart';
 import 'package:ntpower/screens/devices_screen.dart';
 import 'package:ntpower/screens/history_screen.dart';
@@ -8,7 +9,6 @@ import 'package:ntpower/screens/home_screen.dart';
 import 'package:ntpower/screens/login_screen.dart';
 import 'package:ntpower/screens/profile_screen.dart';
 import 'package:ntpower/utils/f_user.dart';
-import 'package:ntpower/widgets/loading_animation.dart';
 import 'package:provider/provider.dart';
 
 String url = 'https://polar-temple-18998.herokuapp.com';
@@ -54,6 +54,9 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DeviceProvider(),
         ),
       ],
       child: BotToastInit(
