@@ -279,6 +279,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                       labelText: 'Username',
                                       suffixIcon: Icon(Icons.person_outline),
                                     ),
+                                    style: TextStyle(fontFamily: 'OpenSans'),
                                     enabled: isEditable,
                                     controller: _usernameTC,
                                     // focusNode: _emailFC,
@@ -297,6 +298,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                       labelText: 'Email',
                                       suffixIcon: Icon(Icons.mail_outline),
                                     ),
+                                    style: TextStyle(fontFamily: 'OpenSans'),
                                     enabled: isEditable,
                                     controller: _emailTC,
                                     // focusNode: _emailFC,
@@ -314,6 +316,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                                       labelText: 'Password',
                                       suffixIcon: Icon(Icons.lock_outline),
                                     ),
+                                    style: TextStyle(fontFamily: 'OpenSans'),
                                     enabled: isEditable,
                                     obscureText: true,
 

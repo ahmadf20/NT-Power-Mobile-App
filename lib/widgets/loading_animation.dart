@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-Widget loadingIcon() {
+Widget loadingIcon({Color color}) {
   return Center(
     child: CircularProgressIndicator(
       valueColor: AlwaysStoppedAnimation<Color>(
-        Color(0xFF047353),
+        color ?? Color(0xFF047353),
       ),
     ),
   );
