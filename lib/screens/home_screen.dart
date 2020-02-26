@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:ntpower/main.dart';
 import 'package:ntpower/models/history.dart';
@@ -25,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Menu selectedMenu = Menu.ampere;
 
   Future fetchCurrentHistory() async {
+    //TODO: use sharedPreference if provider is null
     var deviceCode = await getDeviceId();
 
     try {
@@ -102,10 +106,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Container(
-                        height: 200,
-                        width: 200,
+                        // height: 200,
+                        // width: 200,
                         margin: EdgeInsets.only(top: 35),
-                        child: Placeholder(),
+                        child: MyCharts(),
                       ),
                       Container(
                         alignment: Alignment.centerRight,
@@ -420,6 +424,62 @@ class _EnergyCardState extends State<EnergyCard> {
         ),
         onPressed: () => widget.onPressed(widget.value),
       ),
+    );
+  }
+}
+
+class MyCharts extends StatefulWidget {
+  MyCharts({Key key}) : super(key: key);
+
+  @override
+  _MyChartsState createState() => _MyChartsState();
+}
+
+class ClicksPerYear {
+  final String year;
+  final int clicks;
+  final charts.Color color;
+
+  ClicksPerYear(this.year, this.clicks, Color color)
+      : this.color = charts.Color(
+            r: color.red, g: color.green, b: color.blue, a: color.alpha);
+}
+
+class _MyChartsState extends State<MyCharts> {
+  @override
+  Widget build(BuildContext context) {
+    var data = [
+      ClicksPerYear('2016', 395, Theme.of(context).accentColor),
+      ClicksPerYear('2017', 200, Colors.white24),
+    ];
+
+    var series = [
+      charts.Series(
+        domainFn: (ClicksPerYear clickData, _) => clickData.year,
+        measureFn: (ClicksPerYear clickData, _) => clickData.clicks,
+        colorFn: (ClicksPerYear clickData, _) => clickData.color,
+        id: 'Clicks',
+        data: data,
+      ),
+    ];
+
+    var chart = charts.PieChart(
+      series,
+      animate: true,
+      defaultRenderer: new charts.ArcRendererConfig(
+          arcWidth: 20, startAngle: 1 / 2 * pi, arcLength: 2 * pi),
+    );
+
+    var chartWidget = Padding(
+      padding: EdgeInsets.all(0.0),
+      child: SizedBox(
+        height: 300.0,
+        child: chart,
+      ),
+    );
+
+    return Center(
+      child: chartWidget,
     );
   }
 }
