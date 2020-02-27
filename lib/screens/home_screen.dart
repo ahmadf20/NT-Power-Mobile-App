@@ -13,6 +13,8 @@ import 'package:ntpower/widgets/loading_animation.dart';
 
 enum Menu { ampere, kwh, volt }
 
+Map data = {'input': '1', 'output': '0'};
+
 class HomeScreen extends StatefulWidget {
   static const routeName = 'home_screen';
   HomeScreen({Key key}) : super(key: key);
@@ -36,6 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
         if (response is History) {
           setState(() {
             currentHistory = response;
+            data['input'] = response.avgInput;
+            data['output'] = response.avgOutput;
           });
         } else {
           print(response);
@@ -106,14 +110,55 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Container(
-                        // height: 200,
+                        height: 300,
                         // width: 200,
                         margin: EdgeInsets.only(top: 35),
-                        child: MyCharts(),
+                        child: Stack(
+                          children: <Widget>[
+                            MyCharts(),
+                            Center(
+                              child: Column(
+                                children: <Widget>[
+                                  Spacer(),
+                                  Text(
+                                    '${(int.parse(data['output']) - int.parse(data['input'])) / int.parse(data['output']) * 100}',
+                                    style: TextStyle(
+                                      fontSize: 50,
+                                      fontFamily: 'Montserrat',
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 2.5,
+                                  ),
+                                  Text(
+                                    '${int.parse(data['input'])}/${int.parse(data['output'])}',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Text(
+                                    selectedMenu.toString().substring(5),
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontFamily: 'Montserrat',
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Spacer(),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                       Container(
                         alignment: Alignment.centerRight,
-                        margin: EdgeInsets.only(right: 25, top: 25),
+                        margin: EdgeInsets.only(right: 25, top: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
@@ -128,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: MediaQuery.of(context).size.width / 3,
                               padding: EdgeInsets.only(top: 10),
                               child: Text(
-                                '${currentHistory.deviceName}',
+                                '${currentHistory.deviceName.toUpperCase()}',
                                 style: TextStyle(
                                   fontFamily: 'Montserrat',
                                   color: Colors.white,
@@ -215,7 +260,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       value: Menu.ampere,
                                       groupValue: selectedMenu,
                                       onPressed: (value) {
-                                        print(value);
                                         setState(() {
                                           selectedMenu = value;
                                         });
@@ -266,22 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         'output': currentHistory.voltageOutput,
                                       },
                                     ),
-                                    SizedBox(width: 20),
-                                    EnergyCard(
-                                      title: 'Volt',
-                                      tag: 'V',
-                                      value: Menu.volt,
-                                      groupValue: selectedMenu,
-                                      onPressed: (value) {
-                                        setState(() {
-                                          selectedMenu = value;
-                                        });
-                                      },
-                                      data: {
-                                        'input': currentHistory.voltageInput,
-                                        'output': currentHistory.voltageOutput,
-                                      },
-                                    ),
+                                    // SizedBox(width: 20),
                                   ],
                                 ),
                               ),
@@ -422,7 +451,12 @@ class _EnergyCardState extends State<EnergyCard> {
             ),
           ],
         ),
-        onPressed: () => widget.onPressed(widget.value),
+        onPressed: () {
+          setState(() {
+            data = widget.data;
+          });
+          widget.onPressed(widget.value);
+        },
       ),
     );
   }
@@ -448,9 +482,11 @@ class ClicksPerYear {
 class _MyChartsState extends State<MyCharts> {
   @override
   Widget build(BuildContext context) {
-    var data = [
-      ClicksPerYear('2016', 395, Theme.of(context).accentColor),
-      ClicksPerYear('2017', 200, Colors.white24),
+    var _data = [
+      ClicksPerYear(
+          'input', int.parse(data['input']), Theme.of(context).accentColor),
+      ClicksPerYear('output',
+          int.parse(data['output']) - int.parse(data['input']), Colors.white24),
     ];
 
     var series = [
@@ -459,7 +495,7 @@ class _MyChartsState extends State<MyCharts> {
         measureFn: (ClicksPerYear clickData, _) => clickData.clicks,
         colorFn: (ClicksPerYear clickData, _) => clickData.color,
         id: 'Clicks',
-        data: data,
+        data: _data,
       ),
     ];
 
