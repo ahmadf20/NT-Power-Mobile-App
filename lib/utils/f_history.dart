@@ -12,11 +12,14 @@ Future getCurrentHistory(deviceCode) async {
     Map<String, String> header = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
-      'X-Authorization': token
+      // 'X-Authorization': '$token'
     };
 
-    var response =
-        await get('$url/api/manage_history/now/$deviceCode', headers: header);
+    print(header);
+
+    var response = await get(
+        '$url/api/manage_history/now/$deviceCode?token=$token',
+        headers: header);
 
     print('${response.headers}\n${response.statusCode}\n${response.body}');
 
@@ -24,6 +27,43 @@ Future getCurrentHistory(deviceCode) async {
 
     if (response.statusCode == 200) {
       return historyFromJson(responseJson);
+    } else if (responseJson['msg'] != null) {
+      return responseJson['msg'];
+    } else {
+      return 'failed to login';
+    }
+  } catch (e) {
+    return e;
+  }
+}
+
+Future getAllHistory(deviceCode) async {
+  try {
+    var token = await getToken();
+
+    Map<String, String> header = {
+      'Content-type': 'application/json',
+      'Accept': 'application/json',
+      // 'X-Authorization': '$token'
+    };
+
+    print(header);
+
+    var response = await get(
+        '$url/api/manage_history/$deviceCode/$deviceCode?token=$token',
+        headers: header);
+
+    print('${response.headers}\n${response.statusCode}\n${response.body}');
+
+    var responseJson = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      List<History> list = [];
+
+      for (var item in responseJson) {
+        list.add(historyFromJson(item));
+      }
+      return list;
     } else if (responseJson['msg'] != null) {
       return responseJson['msg'];
     } else {

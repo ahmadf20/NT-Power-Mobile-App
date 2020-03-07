@@ -29,10 +29,10 @@ Future getDevices() async {
     Map<String, String> header = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
-      'X-Authorization': token
+      // 'X-Authorization': token
     };
 
-    var response = await get('$url/api/manage_device/user', headers: header);
+    var response = await get('$url/api/manage_device/user?token=$token', headers: header);
 
     print('${response.headers}\n${response.statusCode}\n${response.body}');
 

@@ -1,15 +1,19 @@
 import 'dart:math';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:ntpower/main.dart';
+import 'package:ntpower/models/device.dart';
 import 'package:ntpower/models/history.dart';
+import 'package:ntpower/providers/p_device.dart';
 import 'package:ntpower/screens/devices_screen.dart';
 import 'package:ntpower/screens/history_screen.dart';
 import 'package:ntpower/screens/profile_screen.dart';
 import 'package:ntpower/utils/f_device.dart';
 import 'package:ntpower/utils/f_history.dart';
 import 'package:ntpower/widgets/loading_animation.dart';
+import 'package:provider/provider.dart';
 
 enum Menu { ampere, kwh, volt }
 
@@ -29,9 +33,29 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Menu selectedMenu = Menu.ampere;
 
+  Future getInitialDevice() async {
+    try {
+      await getDevices().then((response) {
+        if (response is List<Device>) {
+          setDeviceId(response[0].code);
+          Provider.of<DeviceProvider>(context, listen: false)
+              .setActiveDevice(response[0]);
+        } else {
+          BotToast.showText(text: response);
+        }
+      });
+    } catch (e) {
+      BotToast.showText(text: e.toString());
+    }
+  }
+
   Future fetchCurrentHistory() async {
-    //TODO: use sharedPreference if provider is null
     var deviceCode = await getDeviceId();
+
+    if (deviceCode == null) {
+      await getInitialDevice();
+      deviceCode = await getDeviceId();
+    }
 
     try {
       await getCurrentHistory(deviceCode).then((response) {
@@ -121,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: <Widget>[
                                   Spacer(),
                                   Text(
-                                    '${(int.parse(data['output']) - int.parse(data['input'])) / int.parse(data['output']) * 100}',
+                                    '${((int.parse(data['output']) - int.parse(data['input'])) / int.parse(data['output']) * 100).toStringAsFixed(2)}',
                                     style: TextStyle(
                                       fontSize: 50,
                                       fontFamily: 'Montserrat',
@@ -480,13 +504,13 @@ class ClicksPerYear {
 }
 
 class _MyChartsState extends State<MyCharts> {
+  var saving = int.parse(data['output']) - int.parse(data['input']);
   @override
   Widget build(BuildContext context) {
     var _data = [
+      ClicksPerYear('input', saving, Theme.of(context).accentColor),
       ClicksPerYear(
-          'input', int.parse(data['input']), Theme.of(context).accentColor),
-      ClicksPerYear('output',
-          int.parse(data['output']) - int.parse(data['input']), Colors.white24),
+          'output', int.parse(data['output']) - saving, Colors.white24),
     ];
 
     var series = [

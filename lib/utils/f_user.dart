@@ -55,10 +55,11 @@ Future getUser() async {
     Map<String, String> header = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
-      'X-Authorization': token
+      // 'X-Authorization': token
     };
 
-    var response = await get('$url/api/manage_user', headers: header);
+    var response =
+        await get('$url/api/manage_user?token=$token', headers: header);
 
     print('${response.headers}\n${response.statusCode}\n${response.body}');
 
@@ -84,11 +85,11 @@ Future updateUser(var data) async {
     Map<String, String> header = {
       'Content-type': 'application/json',
       'Accept': 'application/json',
-      'X-Authorization': token
+      // 'X-Authorization': token
     };
 
-    var response =
-        await put('$url/api/manage_user', body: body, headers: header);
+    var response = await put('$url/api/manage_user?token=$token',
+        body: body, headers: header);
 
     print('${response.headers}\n${response.statusCode}\n${response.body}');
 

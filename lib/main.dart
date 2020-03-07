@@ -11,7 +11,8 @@ import 'package:ntpower/screens/profile_screen.dart';
 import 'package:ntpower/utils/f_user.dart';
 import 'package:provider/provider.dart';
 
-String url = 'https://polar-temple-18998.herokuapp.com';
+// String url = 'https://polar-temple-18998.herokuapp.com';
+String url = 'https://data.ntpower.co.id/index.php';
 
 void main() => runApp(MyApp());
 
@@ -36,6 +37,21 @@ class _MyAppState extends State<MyApp> {
     print(token);
     setState(() {});
   }
+
+  // Future test() async {
+  //   try {
+  //     var response = await get(
+  //         'https://data.ntpower.co.id/index.php/api/authentication/get_me_data?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZF91c2VyIjoiMSIsImVtYWlsIjoiYWRtaW5AZ21haWwuY29tIn0.DbT4jkf7eK7C5sEi5XZGTwbF6dHWf3LeA3uLMMfERbY');
+
+  //     print('${response.headers}\n${response.statusCode}\n${response.body}');
+
+  //     if (response.statusCode == 200) {
+  //       print(' BERHASIL ');
+  //     }
+  //   } catch (e) {
+  //     return e;
+  //   }
+  // }
 
   @override
   void initState() {
@@ -68,7 +84,9 @@ class _MyAppState extends State<MyApp> {
             primaryColor: Color(0xFF047353),
             accentColor: Color(0xFFe2c472),
           ),
-          home: token != null ? HomeScreen() : LoginScreen(),
+          home: ProfileScreen(),
+
+          // home: token != null ? HomeScreen() : LoginScreen(),
           initialRoute: '/',
           routes: {
             HomeScreen.routeName: (context) => HomeScreen(),
