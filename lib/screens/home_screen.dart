@@ -504,13 +504,13 @@ class ClicksPerYear {
 }
 
 class _MyChartsState extends State<MyCharts> {
-  var saving = int.parse(data['output']) - int.parse(data['input']);
   @override
   Widget build(BuildContext context) {
+    var saving = int.parse(data['output']) - int.parse(data['input']);
+    print(" saving : $saving\n output : ${int.parse(data['input'])}");
     var _data = [
       ClicksPerYear('input', saving, Theme.of(context).accentColor),
-      ClicksPerYear(
-          'output', int.parse(data['output']) - saving, Colors.white24),
+      ClicksPerYear('output', int.parse(data['input']), Colors.white24),
     ];
 
     var series = [
