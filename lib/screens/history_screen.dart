@@ -462,7 +462,7 @@ class DataTableHistory extends StatelessWidget {
                         child: Text(((int.parse(item.avgOutput) -
                                         int.parse(item.avgInput)) *
                                     100 ~/
-                                    int.parse(item.avgInput))
+                                    int.parse(item.avgOutput))
                                 .toString() +
                             '%')),
                   ),
